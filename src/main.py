@@ -1,7 +1,11 @@
 import json
 import os
+import platform
 
-os.system("clear")
+if(platform.system() == 'Windows'):
+    os.system("cls")
+else:
+    os.system("clear")
 
 
 class colors:
@@ -17,8 +21,17 @@ class colors:
 
 
 google_text = f'{colors.BLUE}G{colors.ENDC}{colors.RED}o{colors.ENDC}{colors.YELLOW}o{colors.ENDC}{colors.BLUE}g{colors.ENDC}{colors.GREEN}l{colors.ENDC}{colors.RED}e{colors.ENDC}'
-print(f'\n\t{google_text}\t')
-query_search = input(f'\tenter your search query: ')
+
+
+UP = '\033[1A'
+CLEAR = '\x1b[2K'
+
+print(f'\n\t{google_text}')
+query_search = input(f'\tSearch: {colors.CYAN}')
+{colors.ENDC}
+
+print(UP, end=CLEAR)
+print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{query_search}"\n{colors.ENDC}\n')
 
 query_search = query_search.replace(' ', '+')
 
@@ -35,8 +48,7 @@ json_data = json.load(json_file)
 
 START = 0
 END = len(json_data['organic_results'])
-print_query = query_search.replace('+', ' ')
-print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{print_query}"\n{colors.ENDC}\n')
+
 
 for i in range(START, END):
     try:
@@ -44,11 +56,11 @@ for i in range(START, END):
         url = json_data['organic_results'][i]['link']
         description = json_data['organic_results'][i]['snippet']
         print(
-            f'\t{i+1}) {colors.GREEN}{title}{colors.ENDC} | {colors.BLUE}{url}{colors.ENDC}')
+            f'\t➤  {colors.GREEN}{title}{colors.ENDC}\n\t    {colors.BLUE}{url}{colors.ENDC}')
         if(description == ''):
             description = 'No description available'
         else:
-            print(f'\t{description[0:100]}{colors.RED}...{colors.ENDC}\n')
+            print(f'\t    {description[0:100]}{colors.RED}...{colors.ENDC}\n')
     except:
         pass
 
