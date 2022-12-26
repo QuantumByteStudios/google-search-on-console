@@ -1,3 +1,5 @@
 src/*.json
 *.json
 ./vscode/
+*.history
+src/*.history

@@ -33,35 +33,47 @@ query_search = input(f'\tSearch: {colors.CYAN}')
 print(UP, end=CLEAR)
 print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{query_search}"\n{colors.ENDC}\n')
 
-query_search = query_search.replace(' ', '+')
+if(query_search == '://history'):
+    history = open('search.history', 'r')
+    print(f'\t{colors.FAIL}Search history:\n{colors.ENDC}')
+    for line in history:
+        print(f'\t➤  {colors.CYAN}{line}{colors.ENDC}')
+    history.close()
+    exit()
+else:
+    history = open('search.history', 'a')
+    history.write(f'{query_search}\n')
 
-api_key = '6d513e41012e1a2cab4fcaa2071b863ed518afbf0fa58b197184a77d2ca1f136'
+    query_search = query_search.replace(' ', '+')
 
-request_url = str(
-    f'https://serpapi.com/search.json?engine=google&q={query_search}&api_key={api_key}')
-# print(request_url)
+    api_key = '6d513e41012e1a2cab4fcaa2071b863ed518afbf0fa58b197184a77d2ca1f136'
 
-os.system(f'curl -s "{request_url}" > result.json')
+    request_url = str(
+        f'https://serpapi.com/search.json?engine=google&q={query_search}&api_key={api_key}')
+    # print(request_url)
 
-json_file = open('result.json', 'r', encoding="utf8")
-json_data = json.load(json_file)
+    os.system(f'curl -s "{request_url}" > result.json')
 
-START = 0
-END = len(json_data['organic_results'])
+    json_file = open('result.json', 'r', encoding="utf8")
+    json_data = json.load(json_file)
 
+    START = 0
+    END = len(json_data['organic_results'])
 
-for i in range(START, END):
-    try:
-        title = json_data['organic_results'][i]['title']
-        url = json_data['organic_results'][i]['link']
-        description = json_data['organic_results'][i]['snippet']
-        print(
-            f'\t➤  {colors.GREEN}{title}{colors.ENDC}\n\t    {colors.BLUE}{url}{colors.ENDC}')
-        if(description == ''):
-            description = 'No description available'
-        else:
-            print(f'\t    {description[0:100]}{colors.RED}...{colors.ENDC}\n')
-    except:
-        pass
+    for i in range(START, END):
+        try:
+            title = json_data['organic_results'][i]['title']
+            url = json_data['organic_results'][i]['link']
+            description = json_data['organic_results'][i]['snippet']
+            print(
+                f'\t➤  {colors.GREEN}{title}{colors.ENDC}\n\t    {colors.BLUE}{url}{colors.ENDC}')
+            if(description == ''):
+                description = 'No description available'
+            else:
+                print(
+                    f'\t    {description[0:100]}{colors.RED}...{colors.ENDC}\n')
+        except:
+            pass
 
-json_file.close()
+    json_file.close()
+    history.close()
