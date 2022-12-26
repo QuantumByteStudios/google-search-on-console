@@ -39,11 +39,17 @@ print_query = query_search.replace('+', ' ')
 print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{print_query}"\n{colors.ENDC}\n')
 
 for i in range(START, END):
-    title = json_data['organic_results'][i]['title']
-    url = json_data['organic_results'][i]['link']
-    description = json_data['organic_results'][i]['snippet']
-    print(
-        f'\t{i+1}) {colors.GREEN}{title}{colors.ENDC} | {colors.BLUE}{url}{colors.ENDC}')
-    print(f'\t{description[0:100]}...\n')
+    try:
+        title = json_data['organic_results'][i]['title']
+        url = json_data['organic_results'][i]['link']
+        description = json_data['organic_results'][i]['snippet']
+        print(
+            f'\t{i+1}) {colors.GREEN}{title}{colors.ENDC} | {colors.BLUE}{url}{colors.ENDC}')
+        if(description == ''):
+            description = 'No description available'
+        else:
+            print(f'\t{description[0:100]}{colors.RED}...{colors.ENDC}\n')
+    except:
+        pass
 
-garbage = input('following are the search result\'s\npress any key to exit...')
+json_file.close()
