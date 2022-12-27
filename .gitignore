@@ -3,3 +3,4 @@ src/*.json
 ./vscode/
 *.history
 src/*.history
+src/test.py

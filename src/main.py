@@ -58,7 +58,12 @@ else:
     json_data = json.load(json_file)
 
     START = 0
-    END = len(json_data['organic_results'])
+
+    try:
+        END = len(json_data['organic_results'])
+    except Exception as ContentNotFound:
+        print(f'\t{colors.FAIL}No results available.{colors.ENDC}')
+        exit()
 
     for i in range(START, END):
         try:
@@ -72,7 +77,8 @@ else:
             else:
                 print(
                     f'\t    {description[0:100]}{colors.RED}...{colors.ENDC}\n')
-        except:
+        except Exception as ContentNotFound:
+            print(f'\t{colors.FAIL}Error while showing results.{colors.ENDC}')
             pass
 
     json_file.close()
