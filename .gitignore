@@ -4,3 +4,4 @@ src/*.json
 *.history
 src/*.history
 src/test.py
+src/apiKey.py
