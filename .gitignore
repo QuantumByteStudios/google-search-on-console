@@ -5,3 +5,4 @@ src/*.json
 src/*.history
 src/test.py
 src/apiKey.py
+__pycache__

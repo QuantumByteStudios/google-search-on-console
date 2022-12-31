@@ -1,6 +1,7 @@
 import json
 import os
 import platform
+from apiKey import getAPIKey  # This File contains the API Key
 
 if(platform.system() == 'Windows'):
     os.system("cls")
@@ -48,7 +49,7 @@ else:
 
     # You can get your own API key here
     # Get API key from https://serpapi.com/
-    api_key = '6d513e41012e1a2cab4fcaa2071b863ed518afbf0fa58b197184a77d2ca1f136'
+    api_key = getAPIKey()
 
     request_url = str(
         f'https://serpapi.com/search.json?engine=google&q={query_search}&api_key={api_key}')
