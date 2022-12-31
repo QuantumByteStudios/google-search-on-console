@@ -62,7 +62,9 @@ else:
     try:
         END = len(json_data['organic_results'])
     except Exception as ContentNotFound:
-        print(f'\t{colors.FAIL}No results available.{colors.ENDC}')
+        print(f'\t{colors.FAIL}No results available.\t(API ERROR){colors.ENDC}')
+        history.close()
+        trash = input()
         exit()
 
     for i in range(START, END):
