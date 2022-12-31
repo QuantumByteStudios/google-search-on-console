@@ -1,7 +1,7 @@
 # google-search-console
 Get google search results, directly on your terminal screen
 
-    git clone https://github.com/QuantumByteStudios/google-search-on-console
+    git clone https://github.com/QuantumByteStudios/google-search-on-console --depth=1
    
 <br>
 
