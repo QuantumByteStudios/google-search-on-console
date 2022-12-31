@@ -10,10 +10,10 @@ else:
 try:
     from apiKey import getAPIKey  # This File contains the API Key
 except Exception as NoAPIKeyFile:
-    print('Hello user looks like you do not have the API Key file.')
-    print('Please create a file named "apiKey.py" in "src/" and add the following line to it:')
-    print('def getAPIKey():')
-    print('\treturn "YOUR_API_KEY"')
+    print('\tHello user looks like you do not have the API Key file.')
+    print('\tPlease create a file named "apiKey.py" in "src/" and add the following line to it:')
+    print('\n\tdef getAPIKey():')
+    print('\t\treturn "YOUR_API_KEY"')
     garbage = input()
     exit()
 
