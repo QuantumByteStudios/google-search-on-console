@@ -1,11 +1,11 @@
 import json
-import os
+import subprocess
 import platform
 
 if(platform.system() == 'Windows'):
-    os.system("cls")
+    subprocess.call("cls", shell=True)
 else:
-    os.system("clear")
+    subprocess.call("clear", shell=True)
 
 try:
     from apiKey import getAPIKey  # This File contains the API Key
@@ -64,7 +64,7 @@ else:
         f'https://serpapi.com/search.json?engine=google&q={query_search}&api_key={api_key}')
     # print(request_url)
 
-    os.system(f'curl -s "{request_url}" > result.json')
+    subprocess.call(f'curl -s "{request_url}" > result.json', shell=True)
 
     json_file = open('result.json', 'r', encoding="utf8")
     json_data = json.load(json_file)
