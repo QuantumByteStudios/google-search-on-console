@@ -5,6 +5,18 @@ Get google search results, directly on your terminal screen
    
 <br>
 
+# Latest Version
+Searching a query
+<p align="center">
+  <img src="src/images/runtime.png">
+</p>
+
+Displaying search history
+<p align="center">
+  <img src="src/images/history.png">
+</p>
+
+# Old Version (Requires API Key)
 Runtime Screenshot   
 
 <p align="center">
