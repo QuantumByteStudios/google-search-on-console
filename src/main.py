@@ -1,21 +1,12 @@
 import json
 import subprocess
 import platform
+from duckpy import Client
 
 if(platform.system() == 'Windows'):
     subprocess.call("cls", shell=True)
 else:
     subprocess.call("clear", shell=True)
-
-try:
-    from apiKey import getAPIKey  # This File contains the API Key
-except Exception as NoAPIKeyFile:
-    print('\tHello user looks like you do not have the API Key file.')
-    print('\tPlease create a file named "apiKey.py" in "src/" and add the following line to it:')
-    print('\n\tdef getAPIKey():')
-    print('\t\treturn "YOUR_API_KEY"')
-    garbage = input()
-    exit()
 
 
 class colors:
@@ -32,7 +23,6 @@ class colors:
 
 google_text = f'{colors.BLUE}G{colors.ENDC}{colors.RED}o{colors.ENDC}{colors.YELLOW}o{colors.ENDC}{colors.BLUE}g{colors.ENDC}{colors.GREEN}l{colors.ENDC}{colors.RED}e{colors.ENDC}'
 
-
 UP = '\033[1A'
 CLEAR = '\x1b[2K'
 
@@ -41,59 +31,42 @@ query_search = input(f'\tSearch: {colors.CYAN}')
 {colors.ENDC}
 
 print(UP, end=CLEAR)
-print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{query_search}"\n{colors.ENDC}\n')
+print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{query_search}"{colors.ENDC}')
 
-if(query_search == '://history'):
-    history = open('search.history', 'r')
-    print(f'\t{colors.FAIL}Search history:\n{colors.ENDC}')
-    for line in history:
-        print(f'\t➤  {colors.CYAN}{line}{colors.ENDC}')
-    history.close()
-    exit()
-else:
-    history = open('search.history', 'a')
-    history.write(f'{query_search}\n')
-
-    query_search = query_search.replace(' ', '+')
-
-    # You can get your own API key here
-    # Get API key from https://serpapi.com/
-    api_key = getAPIKey()
-
-    request_url = str(
-        f'https://serpapi.com/search.json?engine=google&q={query_search}&api_key={api_key}')
-    # print(request_url)
-
-    subprocess.call(f'curl -s "{request_url}" > result.json', shell=True)
-
-    json_file = open('result.json', 'r', encoding="utf8")
-    json_data = json.load(json_file)
-
-    START = 0
-
-    try:
-        END = len(json_data['organic_results'])
-    except Exception as ContentNotFound:
-        print(f'\t{colors.FAIL}No results available.\t(API ERROR){colors.ENDC}')
+try:
+    client = Client()
+    results = client.search(query_search)
+    if(query_search == '://history'):
+        history = open('search.history', 'r')
+        print(f'\t{colors.FAIL}Search history:\n{colors.ENDC}')
+        print(f'{colors.CYAN}')
+        index = 1
+        for line in history:
+            print(f'\t{index}. {line}')
+            index += 1
+        print(f'{colors.ENDC}')
         history.close()
-        trash = input()
+        garbage = input()
         exit()
-
-    for i in range(START, END):
-        try:
-            title = json_data['organic_results'][i]['title']
-            url = json_data['organic_results'][i]['link']
-            description = json_data['organic_results'][i]['snippet']
+    else:
+        print(f'\t{colors.FAIL}About {len(results)} search results.{colors.ENDC}\n')
+        history = open('search.history', 'a')
+        history.write(f'{query_search}\n')
+        history.close()
+        results_length = len(results)
+        for i in range(results_length):
+            result_index = i + 1
+            title = results[i].title
+            url = results[i].url
+            description = results[i].description
             print(
-                f'\t➤  {colors.GREEN}{title}{colors.ENDC}\n\t    {colors.BLUE}{url}{colors.ENDC}')
-            if(description == ''):
-                description = 'No description available'
-            else:
-                print(
-                    f'\t    {description[0:100]}{colors.RED}...{colors.ENDC}\n')
-        except Exception as ContentNotFound:
-            print(f'\t{colors.FAIL}Error while showing results.{colors.ENDC}')
-            pass
-
-    json_file.close()
-    history.close()
+                f'{colors.CYAN}{result_index}.{colors.ENDC}\t{colors.GREEN}{title}{colors.ENDC}')
+            print(f'\t{colors.BLUE}{url}{colors.ENDC}')
+            print(f'\t{description[0:100]}{colors.RED}...{colors.ENDC}')
+            print('')
+        garbage = input()
+        exit()
+except Exception as e:
+    print(f'{colors.FAIL}No results available.{colors.ENDC}')
+    garbage = input()
+    exit()
