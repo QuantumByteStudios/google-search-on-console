@@ -1,8 +1,9 @@
-src/*.json
 *.json
-./vscode/
 *.history
-src/*.history
-src/test.py
-src/apiKey.py
+./vscode/
 __pycache__
+src/apiKey.py
+src/*.history
+src/*.json
+src/test.py
+src/oldVer.py
