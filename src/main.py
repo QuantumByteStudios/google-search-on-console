@@ -2,8 +2,9 @@ import json
 import subprocess
 import platform
 from duckpy import Client
+import time
 
-if(platform.system() == 'Windows'):
+if (platform.system() == 'Windows'):
     subprocess.call("cls", shell=True)
 else:
     subprocess.call("clear", shell=True)
@@ -35,8 +36,14 @@ print(f'\t{colors.FAIL}Results for: {colors.CYAN}"{query_search}"{colors.ENDC}')
 
 try:
     client = Client()
+    searchStart = time.time()
     results = client.search(query_search)
-    if(query_search == '://history'):
+    searchEnd = time.time()
+    searchTime = searchEnd - searchStart
+
+    searchTime = round(searchTime, 2)
+
+    if (query_search == ':history'):
         history = open('search.history', 'r')
         print(f'\t{colors.FAIL}Search history:\n{colors.ENDC}')
         print(f'{colors.CYAN}')
@@ -49,7 +56,8 @@ try:
         garbage = input()
         exit()
     else:
-        print(f'\t{colors.FAIL}About {len(results)} search results.{colors.ENDC}\n')
+        print(
+            f'\t{colors.FAIL}About {len(results)} search results in {searchTime} seconds.{colors.ENDC}\n')
         history = open('search.history', 'a')
         history.write(f'{query_search}\n')
         history.close()
@@ -60,7 +68,7 @@ try:
             url = results[i].url
             description = results[i].description
             print(
-                f'{colors.CYAN}{result_index}.{colors.ENDC}\t{colors.GREEN}{title}{colors.ENDC}')
+                f'{colors.CYAN}  {result_index}.{colors.ENDC}\t{colors.GREEN}{title}{colors.ENDC}')
             print(f'\t{colors.BLUE}{url}{colors.ENDC}')
             print(f'\t{description[0:100]}{colors.RED}...{colors.ENDC}')
             print('')
