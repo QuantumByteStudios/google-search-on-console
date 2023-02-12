@@ -16,6 +16,8 @@ Displaying search history
   <img src="src/images/history.png">
 </p>
 
+<!--
+
 # Old Version (Requires API Key)
 Runtime Screenshot   
 
@@ -34,4 +36,4 @@ If you find this error kindly create a file `apiKey.py` in `src` folder and crea
 
 <p align="center">
   <img src="src/images/getAPIKeyFunction.png">
-</p>
+</p> -->
