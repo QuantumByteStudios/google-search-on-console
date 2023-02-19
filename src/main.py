@@ -5,9 +5,9 @@ from duckpy import Client
 import time
 
 if (platform.system() == 'Windows'):
-    subprocess.call("cls", shell=True)
+    subprocess.call("cls", shell=True)  # nosec B602, B607
 else:
-    subprocess.call("clear", shell=True)
+    subprocess.call("clear", shell=True)  # nosec B602, B607
 
 
 class colors:
