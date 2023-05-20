@@ -7,3 +7,4 @@ src/*.history
 src/*.json
 src/test.py
 src/oldVer.py
+.vscode
