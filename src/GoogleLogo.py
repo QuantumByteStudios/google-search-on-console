@@ -43,4 +43,6 @@ google_text_line_three = \
 
 google_text = f'\n\t{google_text_line_one}\n\t{google_text_line_two}\n\t{google_text_line_three}'
 
+google_text_basic = f'\n{google_text_line_one}\n{google_text_line_two}\n{google_text_line_three}'
+
 # print(google_text)

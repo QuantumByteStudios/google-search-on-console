@@ -18,6 +18,8 @@ UP = '\033[1A'
 CLEAR = '\x1b[2K'
 
 print(google_text)
+print(f'\t{gl.colors.FAIL}Type {gl.colors.CYAN}"{gl.colors.GREEN}:history{gl.colors.CYAN}"{gl.colors.FAIL} to see your search history.{gl.colors.ENDC}\n')
+
 query_search = input(f'\tSearch: {gl.colors.CYAN}')
 {gl.colors.ENDC}
 
