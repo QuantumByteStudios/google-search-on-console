@@ -50,7 +50,7 @@ try:
     else:
         print(
             f'\t{gl.colors.FAIL}About {len(results)} search results in {searchTime} seconds.{gl.colors.ENDC}\n')
-        history = open('search.history', 'a')
+        history = open('search.history', 'a', encoding='utf_8')
         history.write(f'{query_search}\n')
         history.close()
         results_length = len(results)
