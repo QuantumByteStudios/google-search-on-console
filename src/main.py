@@ -1,6 +1,6 @@
 import subprocess
 import platform
-from duckpy import Client
+from duckduckgo_search import DDGS
 import GoogleLogo as gl
 import time
 
@@ -8,9 +8,6 @@ if (platform.system() == 'Windows'):
     subprocess.call("cls", shell=True)  # nosec B602, B607
 else:
     subprocess.call("clear", shell=True)  # nosec B602, B607
-
-
-# google_text = f'{gl.colors.BLUE}{gl.g}{gl.colors.ENDC}{gl.colors.RED}{gl.o}{gl.colors.ENDC}{gl.colors.YELLOW}{gl.o}{gl.colors.ENDC}{gl.colors.BLUE}{gl.g}{gl.colors.ENDC}{gl.colors.GREEN}{gl.l}{gl.colors.ENDC}{gl.colors.RED}{gl.e}{gl.colors.ENDC}'
 
 google_text = gl.google_text
 
@@ -27,9 +24,8 @@ print(UP, end=CLEAR)
 print(f'\t{gl.colors.FAIL}Results for: {gl.colors.CYAN}"{query_search}"{gl.colors.ENDC}')
 
 try:
-    client = Client()
     searchStart = time.time()
-    results = client.search(query_search)
+    results = DDGS().text(query_search, max_results=8)
     searchEnd = time.time()
     searchTime = searchEnd - searchStart
 
@@ -54,16 +50,17 @@ try:
         history.write(f'{query_search}\n')
         history.close()
         results_length = len(results)
-        for i in range(results_length):
-            result_index = i + 1
-            title = results[i].title
-            url = results[i].url
-            description = results[i].description
+        result_index = 1
+        for result in results:
+            title = result['title']
+            url = result['href']
+            description = result['body']
             print(
                 f'{gl.colors.CYAN}  {result_index}.{gl.colors.ENDC}\t{gl.colors.GREEN}{title}{gl.colors.ENDC}')
             print(f'\t{gl.colors.BLUE}{url}{gl.colors.ENDC}')
             print(
                 f'\t{description[0:100]}{gl.colors.RED}...{gl.colors.ENDC}')
+            result_index += 1
             print('')
         garbage = input()
         exit()

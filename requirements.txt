@@ -1,1 +1,1 @@
-duckpy==3.2.0
+duckduckgo_search==5.0
