@@ -1,1 +1,1 @@
-duckduckgo_search==5.0
+duckduckgo-search==5.2.1
